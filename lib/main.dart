@@ -1,0 +1,133 @@
+import 'dart:ffi';
+import 'package:flutter/material.dart';
+import 'temperaturelist.dart';
+import 'create_temperature.dart';
+import 'profilemenu_drawer.dart';
+import 'searchlist.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'TC Temperature Tracking',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: Center(child: MyHomePage(title: 'TC Temperature Tracking')),
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (BuildContext context) =>
+      //       MyHomePage(title: 'TC Temperature Tracking'),
+      //   '/signup': (BuildContext context) => Createexpenses(),
+      // },
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // int _counter = 0;
+  String expensename = "";
+  Double expenseamount;
+  // void _incrementCounter() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: ProfileDrawer(),
+      appBar:
+          // PreferredSize(
+          //     preferredSize: Size.fromHeight(150.0), // here the desired height
+          //     child:
+          AppBar(
+        // automaticallyImplyLeading: false, // hides leading widget
+        title: Text(widget.title),
+        // flexibleSpace: Profilepic(),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchTemperature()),
+              );
+            },
+          ),
+        ],
+        // )
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Temperaturelist(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateTemperatureScreen()),
+          );
+          // showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) {
+          //       return AlertDialog(
+          //           title: Text('Add Expenses'),
+          //           content: Column(
+          //             children: <Widget>[
+          //               TextFormField(
+          //                 keyboardType: TextInputType.text,
+          //                 decoration:
+          //                     InputDecoration(labelText: 'Expense name'),
+          //                 validator: (value) =>
+          //                     value.length == 0 ? "Enter name" : null,
+          //                 onChanged: (String value) {
+          //                   expensename = value;
+          //                 },
+          //               ),
+          //               TextFormField(
+          //                 keyboardType: TextInputType.number,
+          //                 decoration: InputDecoration(labelText: 'Amount'),
+          //                 validator: (value) =>
+          //                     value.length == 0 ? "Enter amount" : 0,
+          //                 onChanged: (value) {
+          //                   expenseamount = value as Double;
+          //                 },
+          //               ),
+          //               Row(
+          //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //                 children: <Widget>[
+          //                   Center(
+          //                     child: FlatButton(
+          //                       onPressed: () {},
+          //                       child: Text('Cancel'),
+          //                     ),
+          //                   ),
+          //                   Center(
+          //                     child: FlatButton(
+          //                       onPressed: () {},
+          //                       child: Text('Save Expense'),
+          //                     ),
+          //                   )
+          //                 ],
+          //               )
+          //             ],
+          //           ));
+          //     });
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
